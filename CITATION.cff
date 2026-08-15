@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If this guide helped you, please cite this repository."
+title: "WeChat Official Account HTML Guide: Fix Missing Images, Broken Sizes, and Stripped CSS"
+type: software
+authors:
+  - name: "V0idream"
+repository-code: "https://github.com/V0idream/wechat-official-account-html-guide"
+url: "https://v0idream.github.io/wechat-official-account-html-guide/"
+license: MIT
+version: 1.0.0
+date-released: 2026-08-15
+keywords:
+  - WeChat Official Account HTML
+  - 微信公众号 HTML
+  - ChatGPT WeChat article
+  - AI-generated WeChat HTML
+  - WeChat image missing
+  - WeChat Base64 image
+  - WeChat CSS stripped
+  - inline CSS
+  - WeChat CDN
+  - mmbiz.qpic.cn
+  - Xiumi
