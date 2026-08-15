@@ -1,0 +1,85 @@
+name: Setup discovery metadata and GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  metadata:
+    name: Try repository metadata
+    runs-on: ubuntu-latest
+    steps:
+      - name: Try to set repository description and homepage
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api --method PATCH "repos/${GITHUB_REPOSITORY}" \
+            -f description='AI/ChatGPT 制作微信公众号 HTML：解决图片丢失、Base64 不显示、图片尺寸错乱、CSS 被清洗；实测方案：微信 CDN（mmbiz.qpic.cn）+ 全行内 CSS。' \
+            -f homepage='https://v0idream.github.io/wechat-official-account-html-guide/'
+
+      - name: Try to set repository topics
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cat > /tmp/topics.json <<'JSON'
+          {
+            "names": [
+              "wechat",
+              "wechat-official-account",
+              "wechat-public-account",
+              "wechat-mp",
+              "wechat-article",
+              "wechat-editor",
+              "wechat-html",
+              "wechat-cdn",
+              "html",
+              "inline-css",
+              "rich-text",
+              "html-paste",
+              "base64",
+              "chatgpt",
+              "ai-writing",
+              "ai-content",
+              "content-publishing",
+              "xiumi",
+              "mmbiz-qpic-cn"
+            ]
+          }
+          JSON
+          gh api --method PUT "repos/${GITHUB_REPOSITORY}/topics" --input /tmp/topics.json
+
+  pages:
+    name: Build and deploy GitHub Pages
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
