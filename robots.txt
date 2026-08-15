@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://v0idream.github.io/wechat-official-account-html-guide/sitemap.xml
