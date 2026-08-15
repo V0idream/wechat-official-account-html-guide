@@ -1,0 +1,6 @@
+title: "微信公众号 HTML 图片丢失与 CSS 样式失效解决方案"
+description: "AI/ChatGPT 生成微信公众号 HTML 后图片丢失、尺寸错乱或 CSS 被清洗？实测方案：微信 CDN（mmbiz.qpic.cn）+ 全行内 CSS。适用于自定义 HTML、秀米迁移与 AI 辅助公众号排版。"
+url: "https://v0idream.github.io"
+baseurl: "/wechat-official-account-html-guide"
+lang: "zh-CN"
+markdown: kramdown
