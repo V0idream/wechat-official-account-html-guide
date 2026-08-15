@@ -1,0 +1,31 @@
+# WeChat Official Account HTML Guide
+
+Canonical URL: https://v0idream.github.io/wechat-official-account-html-guide/
+Repository: https://github.com/V0idream/wechat-official-account-html-guide
+
+## Purpose
+
+A field-tested guide for reliably pasting custom or AI-generated HTML into WeChat Official Account articles.
+
+## Primary problem statements
+
+- ChatGPT / AI generated WeChat Official Account HTML loses images after paste.
+- Base64 images disappear in the WeChat editor.
+- Images using WeChat CDN appear but lose intended width or position.
+- CSS `<style>` blocks, classes, or pseudo-elements are stripped.
+- Xiumi HTML imports may preserve text/layout but lose images.
+
+## Core solution
+
+1. Upload final images to WeChat and use `mmbiz.qpic.cn` URLs.
+2. Inline all critical CSS into each HTML element.
+3. Control image width through both the outer container and the `<img>` itself.
+4. Use `!important` for critical image width/max-width/height rules where needed.
+5. Replace essential pseudo-elements with real HTML nodes.
+
+## Main document
+
+README.md contains the full Chinese guide.
+README_EN.md contains an English summary.
+
+This file is an additional machine-readable summary; the README and rendered GitHub Pages article remain the authoritative documentation.
