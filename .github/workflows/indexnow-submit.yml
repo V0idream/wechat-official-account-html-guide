@@ -1,0 +1,46 @@
+name: Submit updated URL to IndexNow
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/.indexnow-trigger'
+
+permissions:
+  contents: read
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for IndexNow verification key to be published by GitHub Pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          KEY='17708429-77fd-46ef-9ced-7609f5e778cd'
+          KEY_URL='https://v0idream.github.io/wechat-official-account-html-guide/17708429-77fd-46ef-9ced-7609f5e778cd.txt'
+          for i in $(seq 1 36); do
+            body=$(curl -fsSL "$KEY_URL" 2>/dev/null || true)
+            if [ "$body" = "$KEY" ]; then
+              echo 'IndexNow key is live.'
+              exit 0
+            fi
+            echo "Waiting for Pages deployment ($i/36)..."
+            sleep 10
+          done
+          echo 'Verification key did not become available in time.' >&2
+          exit 1
+
+      - name: Submit homepage to IndexNow
+        shell: bash
+        run: |
+          set -euo pipefail
+          response=$(curl -sS -o /tmp/indexnow-response.txt -w '%{http_code}' -G 'https://api.indexnow.org/indexnow' \
+            --data-urlencode 'url=https://v0idream.github.io/wechat-official-account-html-guide/' \
+            --data-urlencode 'key=17708429-77fd-46ef-9ced-7609f5e778cd' \
+            --data-urlencode 'keyLocation=https://v0idream.github.io/wechat-official-account-html-guide/17708429-77fd-46ef-9ced-7609f5e778cd.txt')
+          cat /tmp/indexnow-response.txt || true
+          echo "HTTP $response"
+          if [ "$response" != '200' ] && [ "$response" != '202' ]; then
+            exit 1
+          fi
